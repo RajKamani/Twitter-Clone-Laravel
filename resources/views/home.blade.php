@@ -9,10 +9,9 @@
         <div class="flex-fill">
             @include('tweetarea')
 
+            @foreach  ($tweets as $tweet)
             @include('timeline')
-            @include('timeline')
-            @include('timeline')
-            @include('timeline')
+            @endforeach
 
         </div>
         <div class="justify-content-end">
