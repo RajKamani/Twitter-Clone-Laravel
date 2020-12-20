@@ -41,35 +41,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function timeline()
+    public function timeline() // Timeline of user
     {
-        $tweet= $this->follows()->pluck('id');
-        $tweet= $tweet->push($this->id);
+        $tweet= $this->follows()->pluck('id'); // getting Following User's ID
+        $tweet= $tweet->push($this->id);                // Adding Current User Id (for showing Own tweets to timeline)
 
-        return Tweet::whereIn('user_id',$tweet)->get()->sortByDesc('created_at');
+        return Tweet::whereIn('user_id',$tweet)->get()->sortByDesc('created_at'); // sort by latest Tweet
 
-      /*
-        $tweet = Tweet::where('user_id',$this->id)->get();
-        $tweet=$tweet->sortByDesc('created_at');
-        return $tweet;*/
     }
-    public function getAvatarAttribute()
+    public function getAvatarAttribute() // Getter For user's Avatar s
     {
-        return 'https://i.pravatar.cc/40?u='.$this->email;
+        return 'https://i.pravatar.cc/200?u=\ ' .$this->email;
     }
 
 
-    public function tweets()
+    public function tweets() // Tweets of user
     {
          return $this->hasMany(Tweet::class);
     }
-    public function follow(User $user)
+    public function follow(User $user) //Follow New User
     {
         return $this->follows()->save($user);
     }
-    public function follows()
+    public function follows() //Following
     {
         return $this->belongsToMany(User::class,'follows','user_id','following_user_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
     }
 
 

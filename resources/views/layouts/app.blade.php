@@ -33,7 +33,7 @@
                   style="color: #00acee; letter-spacing: 3px;">Twitter</span>
             <div style="float: right">
                 @auth
-                    <span> <img class="rounded-circle" src="{{auth()->user()->avatar}}">
+                    <span> <img height="40" width="40" class="rounded-circle" src="{{auth()->user()->avatar}}">
                        <span>
                            <form action="{{ route('logout') }}" method="POST" class="d-inline-flex">
                             @csrf
@@ -48,7 +48,25 @@
     </section>
     <section class="pl-5">
         <main class="container mx-auto">
-            @yield('content')
+            <div class="d-flex  mt-3">
+                @auth()
+                    <div class="">
+                        @include('sidebar_links')
+                    </div>
+                @endauth
+
+                <div class="flex-fill">
+                @yield('content')
+                <!-- Home.blade.php file-->
+                </div>
+                @auth()
+                    <div class="justify-content-end">
+                        @include('friends_list')
+                    </div>
+                @endauth
+
+            </div>
+
         </main>
     </section>
 </div>
