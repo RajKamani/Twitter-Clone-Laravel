@@ -43,35 +43,50 @@ class User extends Authenticatable
 
     public function timeline() // Timeline of user
     {
-        $tweet= $this->follows()->pluck('id'); // getting Following User's ID
-        $tweet= $tweet->push($this->id);                // Adding Current User Id (for showing Own tweets to timeline)
+        $tweet = $this->follows()->pluck('id'); // getting Following User's ID
+        $tweet = $tweet->push($this->id);                // Adding Current User Id (for showing Own tweets to timeline)
 
-        return Tweet::whereIn('user_id',$tweet)->get()->sortByDesc('created_at'); // sort by latest Tweet
+        return Tweet::whereIn('user_id', $tweet)->get()->sortByDesc('created_at'); // sort by latest Tweet
 
     }
+
     public function getAvatarAttribute() // Getter For user's Avatar s
     {
-        return 'https://i.pravatar.cc/200?u=\ ' .$this->email;
+        return 'https://i.pravatar.cc/200?u=\ ' . $this->email;
     }
 
 
     public function tweets() // Tweets of user
     {
-         return $this->hasMany(Tweet::class);
+        return $this->hasMany(Tweet::class)->latest();
     }
+
+    public function is_following_already(User $user) //check whether current user already follow or not
+    {
+        return $this->follows()->where('following_user_id',$user->id)->exists();
+    }
+
     public function follow(User $user) //Follow New User
     {
         return $this->follows()->save($user);
     }
+    public function unFollow(User $user) //Follow New User
+    {
+        return $this->follows()->detach($user);
+    }
+
     public function follows() //Following
     {
-        return $this->belongsToMany(User::class,'follows','user_id','following_user_id');
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
     }
 
-    public function getRouteKeyName()
+    public function Toggle_Follow_unFollow(User $user)
     {
-        return 'name';
+            if($this->is_following_already($user))
+            {
+                return $this->unFollow($user);
+            }
+            return  $this->follow($user);
     }
-
 
 }
