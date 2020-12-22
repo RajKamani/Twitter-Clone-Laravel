@@ -20,6 +20,6 @@
         <a class="font-weight-bold mb-4 d-inline-block" style="color:#1d68a7; font-size: medium" href="#">List</a>
     </li>
     <li>
-        <a class="font-weight-bold mb-4 d-inline-block" style="color:#1d68a7; font-size: medium" href="{{route('profile',auth()->user()->name)}}">Profile</a>
+        <a class="font-weight-bold mb-4 d-inline-block" style="color:#1d68a7; font-size: medium" href="{{route('profile',auth()->user()->username)}}">Profile</a>
     </li>
 </ul>
