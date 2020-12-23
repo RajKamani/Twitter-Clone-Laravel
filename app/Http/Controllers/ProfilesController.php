@@ -15,7 +15,8 @@ class ProfilesController extends Controller
     {
 
         return view('profiles.show', [
-            'user' => $user
+            'user' => $user,
+            'tweets'=>$user->tweets()->paginate(3),
         ]);
     }
 

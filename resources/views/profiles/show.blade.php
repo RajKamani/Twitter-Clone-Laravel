@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <!-- Profile Page Header -->
+
     <header class="mx-5 my-2 position-relative">
 
             <div class="position-relative mx-4">
@@ -10,14 +10,14 @@
                <img style="border-radius: 0.9em" src="{{$user->banner}}" height="250px" width="750px">
                 <img src="{{$user->avatar}}" class="rounded-circle mr-2 position-absolute" height="150" width="150"
                      style="left: 50%;transform: translateX(-50%) translateY(100%); border: #FFFFFF 5px solid;"/>
-                <!-- Profile Image of Profile page-->
+
             </div>
 
         <div class="d-flex justify-content-between mx-4">
             <div class="my-2 mx-1">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4>{{$user->name}}</h4>
-                    <h6 class=" p-1 text-muted">{{'@'.$user->username}}</h6>
+                <div class="d-flex justify-content-between align-items-center" >
+                    <div  style="max-width: 232px"><h4>{{$user->name}}</h4>
+                        <h6 class=" text-muted">{{'@'.$user->username}}</h6></div>
                 </div>
                 <p class="text-muted" style="font-size: 14px">Joined {{$user->created_at->diffForHumans()}}</p>
             </div>
@@ -55,5 +55,5 @@
     </header>
 
 
-    @include('timeline_loop',['tweets'=>$user->tweets])
+    @include('timeline_loop',['tweets'=>$tweets])
 @endsection

@@ -50,7 +50,7 @@ class User extends Authenticatable
         $tweet = $this->follows()->pluck('id'); // getting Following User's ID
         $tweet = $tweet->push($this->id);                // Adding Current User Id (for showing Own tweets to timeline)
 
-        return Tweet::whereIn('user_id', $tweet)->get()->sortByDesc('created_at'); // sort by latest Tweet
+        return Tweet::whereIn('user_id', $tweet)->latest()->paginate(20);// sort by latest Tweet
 
     }
 
