@@ -65,6 +65,11 @@ class User extends Authenticatable
     }
 
 
+    public function explore() // Explore Page
+    {
+        return $this->follows()->pluck('id')->push($this->id)->toArray();
+    }
+
     public function tweets() // Tweets of user
     {
         return $this->hasMany(Tweet::class)->latest();

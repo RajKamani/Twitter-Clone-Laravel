@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\FollowsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\TweetController;
@@ -27,7 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/tweets', [TweetController::class, 'store'])->name('tweets');
     Route::post('/profile/{user:username}/follow', [FollowsController::class, 'store'])->name('follow');
     Route::get('/profile/{user:username}/edit', [ProfilesController::class, 'edit'])->name('edit.profile')->middleware('can:edit,user');
-    Route::patch('/profile/{user:username}', [ProfilesController::class, 'update'])->name('update.profile');
+    Route::patch('/profile/{user:username}', [ProfilesController::class, 'update'])->name('update.profile')->middleware('can:edit,user');
+    Route::get('/{user:username}/explore', [ExploreController::class, 'index'])->name('explore');
 
 });
 
