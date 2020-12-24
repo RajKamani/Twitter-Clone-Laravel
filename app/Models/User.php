@@ -50,20 +50,24 @@ class User extends Authenticatable
         $tweet = $this->follows()->pluck('id'); // getting Following User's ID
         $tweet = $tweet->push($this->id);                // Adding Current User Id (for showing Own tweets to timeline)
 
-        return Tweet::whereIn('user_id', $tweet)->latest()->paginate(20);// sort by latest Tweet
+        return Tweet::whereIn('user_id', $tweet)->WithLikes()->latest()->paginate(20);// sort by latest Tweet
 
+    }
+
+    public function follows() //Following
+    {
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
     }
 
     public function getAvatarAttribute($value) // Getter For user's Avatar s
     {
-        return asset('storage/'.$value);
+        return asset('storage/' . $value);
     }
 
     public function getBannerAttribute($value) // Getter For user's Banner
     {
-        return asset('storage/'.$value);
+        return asset('storage/' . $value);
     }
-
 
     public function explore() // Explore Page
     {
@@ -75,32 +79,32 @@ class User extends Authenticatable
         return $this->hasMany(Tweet::class)->latest();
     }
 
-    public function is_following_already(User $user) //check whether current user already follow or not
+    public function likes() //User has many Likes
     {
-        return $this->follows()->where('following_user_id',$user->id)->exists();
+        return $this->hasMany(Like::class);
     }
 
-    public function follow(User $user) //Follow New User
+    public function Toggle_Follow_unFollow(User $user)
     {
-        return $this->follows()->save($user);
+        if ($this->is_following_already($user)) {
+            return $this->unFollow($user);
+        }
+        return $this->follow($user);
     }
+
+    public function is_following_already(User $user) //check whether current user already follow or not
+    {
+        return $this->follows()->where('following_user_id', $user->id)->exists();
+    }
+
     public function unFollow(User $user) //Follow New User
     {
         return $this->follows()->detach($user);
     }
 
-    public function follows() //Following
+    public function follow(User $user) //Follow New User
     {
-        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
-    }
-
-    public function Toggle_Follow_unFollow(User $user)
-    {
-            if($this->is_following_already($user))
-            {
-                return $this->unFollow($user);
-            }
-            return  $this->follow($user);
+        return $this->follows()->save($user);
     }
 
 }

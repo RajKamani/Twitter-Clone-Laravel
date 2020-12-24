@@ -20,6 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<script src="http://unpkg.com/turbolinks"></script>
 <div id="app">
     <section class="pl-5 py-3 ">
         <header class="container mx-auto ">
