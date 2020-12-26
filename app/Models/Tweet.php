@@ -73,4 +73,9 @@ class Tweet extends Model
             ->where('likes', false)
             ->count();
     }
+
+    public function path_Image($value) // Getter For Tweet Image
+    {
+        return asset('storage/' . $value);
+    }
 }

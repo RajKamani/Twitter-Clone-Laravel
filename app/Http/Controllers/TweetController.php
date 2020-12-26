@@ -14,14 +14,23 @@ class TweetController extends Controller
         ]);
     }
 
-    function store(Request $request)
+    function storeTweet()
     {
-        $data_to_store=$request->validate([
-            'tweetText' => 'Required | max:255'
+
+        $data_to_store=\request()->validate([
+            'tweetText' => ['Required', 'max:255'],
+            'tweetImage' => ['file','mimes:jpg,png'],
         ]);
+
         $tweet = new Tweet();
         $tweet->user_id = auth()->id();
         $tweet->body=$data_to_store['tweetText'];
+        if(request()->has('tweetImage'))
+        {
+
+            $data_to_store['tweetImage'] = request('tweetImage')->store('TweetImages');
+            $tweet->path_image=$data_to_store['tweetImage'];
+        }
         $tweet->save();
         return redirect(route('tweets'));
     }

@@ -6,12 +6,17 @@
                                                              class="rounded-circle mr-2 " style="flex-shrink: 0;"/></a>
         </div>
 
+
         <div class="ml-1">
             <a style="text-decoration: none; color: #000000" href="{{route('profile',$tweet->user)}}"><h5
                     class="font-weight-bold">{{ !empty($tweet->user->name) ? $tweet->user->name : "not" }}</h5></a>
             <p>{{ $tweet->body }} </p>
-
-
+            @can('edit',$tweet->user)
+                <p>you can edit</p>
+            @endcan
+            @if($tweet->path_image)
+            <img src="{{$tweet->path_Image($tweet->path_image)}}" class="img-fluid" >
+            @endif
             <div class="d-flex">
 
                 <form method="post" action="{{route('like',$tweet->id)}}">
