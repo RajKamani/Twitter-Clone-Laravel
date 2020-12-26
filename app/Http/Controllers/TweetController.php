@@ -34,4 +34,13 @@ class TweetController extends Controller
         $tweet->save();
         return redirect(route('tweets'));
     }
+
+    function destroy(Tweet $tweet)
+    {
+        try {
+            $tweet->delete();
+        } catch (\Exception $e) {
+        }
+        return back();
+    }
 }
