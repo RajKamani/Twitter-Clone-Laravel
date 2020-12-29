@@ -47,12 +47,12 @@ class ProfilesController extends Controller
         }
         if(request('avatar'))
         {
-            $data_to_update['avatar'] = request('avatar')->store('avatars');
+            $data_to_update['avatar'] = request('avatar')->store('public\avatars');
         }
 
         if(request('banner'))
         {
-            $data_to_update['banner'] = request('banner')->store('avatars');
+            $data_to_update['banner'] = request('banner')->store('public\avatars');
         }
 
         $data_to_update['password'] = Hash::make($data_to_update['password']);
