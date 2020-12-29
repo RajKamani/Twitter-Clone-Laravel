@@ -28,7 +28,7 @@ class TweetController extends Controller
         if(request()->has('tweetImage'))
         {
 
-            $data_to_store['tweetImage'] = request('tweetImage')->store('TweetImages');
+            $data_to_store['tweetImage'] = request('tweetImage')->store('public\TweetImages');
             $tweet->path_image=$data_to_store['tweetImage'];
         }
         $tweet->save();
