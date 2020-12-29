@@ -61,11 +61,13 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value) // Getter For user's Avatar s
     {
+         $value=str_replace('public\\', '', $value);
         return asset('storage/' . $value);
     }
 
     public function getBannerAttribute($value) // Getter For user's Banner
     {
+         $value=str_replace('public\\', '', $value);
         return asset('storage/' . $value);
     }
 

@@ -8,9 +8,9 @@
         </div>
 
 
-        <div class="ml-1">
+        <div class="ml-1"  style="width: 700px ">
 
-            <div class="d-flex justify-content-between">
+            <div class="d-flex  justify-content-between">
                 <div>
                     <a style="text-decoration: none; color: #000000" href="{{route('profile',$tweet->user)}}">
                         <h5

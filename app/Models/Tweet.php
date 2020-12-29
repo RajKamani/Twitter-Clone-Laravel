@@ -76,6 +76,8 @@ class Tweet extends Model
 
     public function path_Image($value) // Getter For Tweet Image
     {
+        $value=str_replace('public\\', '', $value);
         return asset('storage/' . $value);
+      
     }
 }
